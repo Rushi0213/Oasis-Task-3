@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>To-Do App</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+    }
+    .container {
+        max-width: 600px;
+        margin: 0 auto;
+        padding: 20px;
+    }
+    h1, h2 {
+        text-align: center;
+    }
+    input[type="text"] {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 10px;
+    }
+    button {
+        padding: 10px 20px;
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        cursor: pointer;
+    }
+    button:hover {
+        background-color: #45a049;
+    }
+    .task-list {
+        list-style-type: none;
+        padding: 0;
+    }
+    .task {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px;
+        border-bottom: 1px solid #ddd;
+    }
+    .task button {
+        background-color: #f44336;
+    }
+    .task button:hover {
+        background-color: #d32f2f;
+    }
+    .completed {
+        text-decoration: line-through;
+        color: #999;
+    }
+</style>
+</head>
+<body>
+<div class="container">
+    <h1>To-Do App</h1>
+    <input type="text" id="taskInput" placeholder="Add a new task...">
+    <button onclick="addTask()">Add Task</button>
+
+    <h2>Pending Tasks</h2>
+    <ul id="pendingTasks" class="task-list"></ul>
+
+    <h2>Completed Tasks</h2>
+    <ul id="completedTasks" class="task-list"></ul>
+</div>
+
+<script>
+    function addTask() {
+        var taskInput = document.getElementById("taskInput");
+        var taskText = taskInput.value.trim();
+        if (taskText === "") {
+            alert("Please enter a task.");
+            return;
+        }
+        var task = createTaskElement(taskText);
+        document.getElementById("pendingTasks").appendChild(task);
+        taskInput.value = "";
+    }
+
+    function createTaskElement(taskText) {
+        var li = document.createElement("li");
+        li.className = "task";
+
+        var span = document.createElement("span");
+        span.textContent = taskText;
+        li.appendChild(span);
+
+        var completeButton = document.createElement("button");
+        completeButton.textContent = "Complete";
+        completeButton.onclick = function () {
+            completeTask(li);
+        };
+        li.appendChild(completeButton);
+
+        var deleteButton = document.createElement("button");
+        deleteButton.textContent = "Delete";
+        deleteButton.onclick = function () {
+            li.remove();
+        };
+        li.appendChild(deleteButton);
+
+        return li;
+    }
+
+    function completeTask(taskElement) {
+        var completedTasksList = document.getElementById("completedTasks");
+        completedTasksList.appendChild(taskElement);
+        taskElement.classList.add("completed");
+    }
+</script>
+</body>
+</html>
+
+
